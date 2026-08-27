@@ -1,36 +1,64 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string longestCommonPrefix(vector<string>& strs) {
-    if (strs.empty()) return "";
+class Solution {
+public:
+    // Returns the longest common prefix in a list of strings
+    string longestCommonPrefix(vector<string>& str) {
+        // Handle the case where input is empty
+        if (str.empty()) return "";
 
-    sort(strs.begin(), strs.end());
+        // Sort the strings lexicographically
+        sort(str.begin(), str.end());
 
-    string first = strs[0];
-    string last = strs.back();
+        // First string in sorted order
+        string first = str[0];
 
-    int n = min(first.size(), last.size());
-    int i = 0;
+        // Last string in sorted order
+        string last = str[str.size() - 1];
 
-    while (i < n && first[i] == last[i])
-        i++;
+        // To store the common prefix
+        string ans = "";
 
-    return first.substr(0, i);
-}
+        // Compare up to the length of the shorter string
+        int minLength = min(first.size(), last.size());
+
+        // Compare characters of first and last string
+        for (int i = 0; i < minLength; i++) {
+            // Stop if characters differ
+            if (first[i] != last[i]) break;
+
+            // Add matching character to answer
+            ans += first[i];
+        }
+
+        // Return the longest common prefix
+        return ans;
+    }
+};
 
 int main() {
+    // Create instance of Solution
+    Solution solution;
+
+    // Input number of strings
     int n;
     cout << "Enter number of strings: ";
     cin >> n;
 
-    vector<string> strs(n);
+    // Input list of strings
+    vector<string> input(n);
 
     cout << "Enter the strings: ";
-    for (int i = 0; i < n; i++)
-        cin >> strs[i];
+    for (int i = 0; i < n; i++) {
+        cin >> input[i];
+    }
 
-    cout << "Longest Common Prefix: "
-         << longestCommonPrefix(strs);
+    // Get the result
+    string result = solution.longestCommonPrefix(input);
+
+    // Print the result
+    cout << "Longest Common Prefix: " << result << endl;
 
     return 0;
 }
